@@ -520,7 +520,6 @@
             discontinuous = YES;
         }
 
-<<<<<<< HEAD
         if (self.headers)
         {
             for(NSString *key in self.headers.allKeys)
@@ -529,7 +528,7 @@
                 CFHTTPMessageSetHeaderFieldValue(message, (__bridge CFStringRef)key, (__bridge CFStringRef)value);
             }
         }
-=======
+
         for (NSString* key in self->requestHeaders)
         {
             NSString* value = [self->requestHeaders objectForKey:key];
@@ -539,7 +538,6 @@
         
         CFHTTPMessageSetHeaderFieldValue(message, CFSTR("Accept"), CFSTR("*/*"));
         CFHTTPMessageSetHeaderFieldValue(message, CFSTR("Ice-MetaData"), CFSTR("0"));
->>>>>>> upstream/master
 
         stream = CFReadStreamCreateForHTTPRequest(NULL, message);
 
