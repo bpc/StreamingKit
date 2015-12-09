@@ -41,8 +41,10 @@ static void ReadStreamCallbackProc(CFReadStreamRef stream, CFStreamEventType eve
     switch (eventType)
     {
         case kCFStreamEventErrorOccurred:
+        {
             [datasource errorOccured];
             break;
+        }
         case kCFStreamEventEndEncountered:
             [datasource eof];
             break;
@@ -135,8 +137,6 @@ static void ReadStreamCallbackProc(CFReadStreamRef stream, CFStreamEventType eve
     {
         CFReadStreamSetClient(stream, kCFStreamEventHasBytesAvailable | kCFStreamEventErrorOccurred | kCFStreamEventEndEncountered, NULL, NULL);
         CFReadStreamUnscheduleFromRunLoop(stream, [eventsRunLoop getCFRunLoop], kCFRunLoopCommonModes);
-        
-        eventsRunLoop = nil;
     }
 }
 

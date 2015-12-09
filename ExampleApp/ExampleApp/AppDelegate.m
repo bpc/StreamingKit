@@ -32,13 +32,14 @@
     AudioSessionSetProperty(kAudioSessionProperty_PreferredHardwareIOBufferDuration, sizeof(bufferLength), &bufferLength);
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.rootViewController = [[UIViewController alloc] init];
     
 	self.window.backgroundColor = [UIColor whiteColor];
     
 	audioPlayer = [[STKAudioPlayer alloc] initWithOptions:(STKAudioPlayerOptions){ .flushQueueOnSeek = YES, .enableVolumeMixer = NO, .equalizerBandFrequencies = {50, 100, 200, 400, 800, 1600, 2600, 16000} }];
 	audioPlayer.meteringEnabled = YES;
 	audioPlayer.volume = 1;
-	
+    
 	AudioPlayerView* audioPlayerView = [[AudioPlayerView alloc] initWithFrame:self.window.bounds andAudioPlayer:audioPlayer];
     
 	audioPlayerView.delegate = self;
@@ -46,9 +47,9 @@
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [self becomeFirstResponder];
 	
-	[self.window addSubview:audioPlayerView];
-	
     [self.window makeKeyAndVisible];
+    
+    [self.window.rootViewController.view addSubview:audioPlayerView];
 	
     return YES;
 }
@@ -60,11 +61,20 @@
 
 -(void) audioPlayerViewPlayFromHTTPSelected:(AudioPlayerView*)audioPlayerView
 {
-	NSURL* url = [NSURL URLWithString:@"http://fs.bloom.fm/oss/audiosamples/sample.mp3"];
+    NSURL* url = [NSURL URLWithString:@"http://www.abstractpath.com/files/audiosamples/sample.mp3"];
     
     STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
     
 	[audioPlayer setDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
+}
+
+-(void) audioPlayerViewPlayFromIcecastSelected:(AudioPlayerView *)audioPlayerView
+{
+    NSURL* url = [NSURL URLWithString:@"http://shoutmedia.abc.net.au:10326"];
+    
+    STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
+    
+    [audioPlayer setDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
 }
 
 -(void) audioPlayerViewQueueShortFileSelected:(AudioPlayerView*)audioPlayerView
@@ -89,7 +99,7 @@
 
 -(void) audioPlayerViewQueuePcmWaveFileSelected:(AudioPlayerView*)audioPlayerView
 {
-	NSURL* url = [NSURL URLWithString:@"http://fs.bloom.fm/oss/audiosamples/perfectly.wav"];
+	NSURL* url = [NSURL URLWithString:@"http://www.abstractpath.com/files/audiosamples/perfectly.wav"];
     
     STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
     

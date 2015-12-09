@@ -58,7 +58,7 @@
 
 -(void) playFromHTTP
 {
-	[audioPlayer play:@"http://fs.bloom.fm/oss/audiosamples/sample.mp3"];
+	[audioPlayer play:@"http://www.abstractpath.com/files/audiosamples/sample.mp3"];
 }
 
 -(void) tick:(NSTimer*)timer
@@ -72,7 +72,7 @@
 	
 	CGFloat meterWidth = 0;
 	
-    if (audioPlayer.duration != 0)
+    if (audioPlayer.currentlyPlayingQueueItemId != nil)
     {
         slider.minValue = 0;
         slider.maxValue = audioPlayer.duration;

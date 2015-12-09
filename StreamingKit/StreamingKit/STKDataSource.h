@@ -45,10 +45,13 @@
 
 @interface STKDataSource : NSObject
 
+@property (readonly) BOOL supportsSeek;
 @property (readonly) SInt64 position;
 @property (readonly) SInt64 length;
 @property (readonly) BOOL hasBytesAvailable;
+@property (nonatomic, readwrite, assign) double durationHint;
 @property (readwrite, unsafe_unretained) id<STKDataSourceDelegate> delegate;
+@property (nonatomic, strong) NSURL *recordToFileUrl;
 
 -(BOOL) registerForEvents:(NSRunLoop*)runLoop;
 -(void) unregisterForEvents;
