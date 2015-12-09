@@ -858,11 +858,11 @@ static void AudioFileStreamPacketsProc(void* clientData, UInt32 numberBytes, UIn
         case kAudioFileStreamProperty_DataFormat:
         {
             STKQueueEntry* entryToUpdate = currentlyReadingEntry;
+            AudioStreamBasicDescription newBasicDescription;
 
             if (!entryToUpdate->parsedHeader)
             {
                 if (entryToUpdate->audioStreamBasicDescription.mSampleRate == 0) {
-                    AudioStreamBasicDescription newBasicDescription;
 
                     UInt32 size = sizeof(newBasicDescription);
                     AudioFileStreamGetProperty(inAudioFileStream, kAudioFileStreamProperty_DataFormat, &size, &newBasicDescription);
